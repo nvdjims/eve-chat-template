@@ -26,7 +26,7 @@ export function ChatComposer({
   maxLength = MAX_CHAT_MESSAGE_CHARS,
   onChange,
   onSubmit,
-  placeholder = "Ask eve anything...",
+  placeholder = "Écris ici...",
   value,
 }: {
   readonly autoFocus?: boolean;

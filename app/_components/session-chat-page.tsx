@@ -405,7 +405,7 @@ export function SessionChatPage({
             onChange={setDraft}
             onStop={handleComposerStop}
             onSubmit={handleComposerSubmit}
-            placeholder="Ask anything..."
+            placeholder="Écris ici..."
             value={draft}
           />
         </div>

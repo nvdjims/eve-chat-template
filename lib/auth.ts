@@ -4,6 +4,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
 import { getAppUrlHost, getEffectiveAppUrl } from "@/lib/auth-url";
 import { db } from "@/lib/db/client";
+import { isOwnerEmail } from "@/lib/owner";
 
 const vercelClientId = process.env.NEXT_PUBLIC_VERCEL_APP_CLIENT_ID?.trim() ?? "";
 const vercelClientSecret = process.env.VERCEL_APP_CLIENT_SECRET?.trim() ?? "";
@@ -43,6 +44,14 @@ export const auth = betterAuth({
   advanced: {
     database: {
       generateId: () => randomUUID(),
+    },
+  },
+  databaseHooks: {
+    user: {
+      create: {
+        // Refuse to create any account other than the owner's.
+        before: async (user) => (isOwnerEmail(user.email) ? { data: user } : false),
+      },
     },
   },
   onAPIError: {

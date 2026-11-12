@@ -1,21 +1,14 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import type { ReactNode } from "react";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { AuthDisplayPreHydrationHead } from "@/components/auth/auth-display";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
-const title = "eve Chat Template";
-const description = "Build your own chat agent with eve.";
-const ogImage = {
-  alt: title,
-  height: 630,
-  url: "/eve-chat-template-og.png",
-  width: 1200,
-};
+// Deliberately neutral name and description: nothing here hints at what the app is for.
+const title = "Carnet";
+const description = "Notes personnelles.";
 
 function resolveMetadataBase() {
   const configuredUrl =
@@ -50,18 +43,12 @@ export const metadata: Metadata = {
     shortcut: ["/icon.svg"],
     apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
   },
-  openGraph: {
-    title,
-    description,
-    images: [ogImage],
-    siteName: title,
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title,
-    description,
-    images: [ogImage],
+  // Keep the app out of search engines and link previews.
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: { index: false, follow: false, noimageindex: true },
   },
 };
 
@@ -87,7 +74,7 @@ export default function RootLayout({ children }: { readonly children: ReactNode 
   return (
     <html
       className={`${geistSans.variable} ${geistMono.variable}`}
-      lang="en"
+      lang="fr"
       suppressHydrationWarning
     >
       <head>
@@ -98,8 +85,6 @@ export default function RootLayout({ children }: { readonly children: ReactNode 
         <ThemeProvider>
           <TooltipProvider>{children}</TooltipProvider>
         </ThemeProvider>
-        <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   );

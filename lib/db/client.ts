@@ -44,7 +44,8 @@ export async function isDatabaseSchemaReady() {
         to_regclass('public.chat_event') is not null as chat_event_ready,
         to_regclass('public.session') is not null as session_ready,
         to_regclass('public."user"') is not null as user_ready,
-        to_regclass('public.verification') is not null as verification_ready
+        to_regclass('public.verification') is not null as verification_ready,
+        to_regclass('public.journal_entry') is not null as journal_ready
     `) as unknown as [
       {
         readonly account_ready: boolean;
@@ -53,6 +54,7 @@ export async function isDatabaseSchemaReady() {
         readonly session_ready: boolean;
         readonly user_ready: boolean;
         readonly verification_ready: boolean;
+        readonly journal_ready: boolean;
       },
     ];
     const result = rows[0];
@@ -62,7 +64,8 @@ export async function isDatabaseSchemaReady() {
         result.chat_event_ready &&
         result.session_ready &&
         result.user_ready &&
-        result.verification_ready,
+        result.verification_ready &&
+        result.journal_ready,
     );
 
     return ready;

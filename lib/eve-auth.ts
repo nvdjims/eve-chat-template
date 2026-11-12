@@ -1,5 +1,6 @@
 import type { AuthFn } from "eve/channels/auth";
 import { auth } from "@/lib/auth";
+import { isOwnerEmail } from "@/lib/owner";
 import { isAppConfigured } from "@/lib/setup";
 
 export const betterAuthEveAuth: AuthFn<Request> = async (request) => {
@@ -11,7 +12,7 @@ export const betterAuthEveAuth: AuthFn<Request> = async (request) => {
     headers: request.headers,
   });
 
-  if (!session?.user) {
+  if (!session?.user || !isOwnerEmail(session.user.email)) {
     return null;
   }
 

@@ -101,3 +101,18 @@ export const chatEvent = pgTable(
 export type Chat = typeof chat.$inferSelect;
 export type ChatEvent = typeof chatEvent.$inferSelect;
 export type User = typeof user.$inferSelect;
+
+// Private journal. `payload` holds AES-256-GCM ciphertext (see lib/journal/crypto.ts);
+// the database never stores the entry text in clear.
+export const journalEntry = pgTable(
+  "journal_entry",
+  {
+    id: text("id").primaryKey(),
+    ownerId: text("owner_id").notNull(),
+    payload: text("payload").notNull(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (table) => [index("idx_journal_entry_owner_created").on(table.ownerId, table.createdAt)],
+);
+
+export type JournalEntry = typeof journalEntry.$inferSelect;

@@ -2042,12 +2042,9 @@ export function EmptyChatBody({ composer }: { readonly composer?: ReactNode }) {
       <div className="flex min-h-0 flex-1 items-center justify-center">
         <div className="w-full max-w-2xl space-y-8 sm:space-y-10 md:space-y-12">
           <h1 className="flex justify-center">
-            <img
-              alt="eve"
-              className="size-16 select-none invert sm:size-20 md:size-24 dark:invert-0"
-              draggable={false}
-              src="/eve.svg"
-            />
+            <span className="text-2xl font-medium tracking-tight text-muted-foreground sm:text-3xl">
+              Carnet
+            </span>
           </h1>
           {composer}
         </div>
